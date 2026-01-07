@@ -5,12 +5,26 @@ export interface IApi {
     post<T extends object>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
 }
 
+export type ObjectApi = {
+    total: number;
+    items: IProduct[]
+}
+
+export type DataResponse ={
+    total: number;
+    id: string
+}
+
+export type DataPost = IBuyer & {
+    total: number,
+    items: string[]
+}
 
 export interface IProduct {
     id: string;
     title: string;
     image: string;
-    categoty: string;
+    category: string;
     price: number | null;
     description: string;
 }
@@ -23,4 +37,11 @@ export interface IBuyer {
 }
 
 export type TPayment = "online" | "cash" | null;
+
+export type Errors = {
+    payment?: string
+    address?: string;
+    email?: string;
+    phone?:string
+}
 

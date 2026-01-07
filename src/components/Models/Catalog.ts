@@ -1,7 +1,8 @@
 import { IProduct } from "../../types/index";
 
 
-class Catalog {
+export class Catalog { 
+    // хранит массив товаров, выбранных покупателем для покупки.
     products : IProduct[] = [];
     selectedProduct : IProduct | null = null;
     
