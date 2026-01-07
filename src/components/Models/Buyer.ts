@@ -1,11 +1,11 @@
-import { IBuyer, TPayment , Errors} from "../../types/index";
+import { IBuyer, TPayment , TOrderFormError} from "../../types/index";
 
 
 export class Buyer {
-    payment: TPayment | null;
-    address: string;
-    email: string;
-    phone: string;
+    private payment: TPayment | null;
+    private address: string;
+    private email: string;
+    private phone: string;
 
     constructor() {
         this.payment = null;
@@ -50,8 +50,8 @@ export class Buyer {
 
     //валидация данных. 
 
-    isValid() : Errors {
-        const errors: Errors = {}
+    isValid() : TOrderFormError {
+        const errors: TOrderFormError = {}
         if(!this.payment) {
             errors.payment = "Не выбран тип оплаты"
         }

@@ -3,8 +3,8 @@ import { IProduct } from "../../types/index";
 
 export class Catalog { 
     // хранит массив товаров, выбранных покупателем для покупки.
-    products : IProduct[] = [];
-    selectedProduct : IProduct | null = null;
+    private products : IProduct[] = [];
+    private selectedProduct : IProduct | null = null;
     
     constructor () {}
 

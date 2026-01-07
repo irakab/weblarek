@@ -1,4 +1,4 @@
-import { IApi, ObjectApi, DataResponse, DataPost } from "../../types/index";
+import { IApi, IProductsResponse, IOrderResponse, IOrderRequest } from "../../types/index";
 
 export class WeblarekApi {
 
@@ -6,11 +6,11 @@ export class WeblarekApi {
         this.api = api
     }
     
-    getProducts(): Promise<ObjectApi> {
-        return this.api.get<ObjectApi>('/product')
+    getProducts(): Promise<IProductsResponse> {
+        return this.api.get<IProductsResponse>('/product')
     }
-    postProducts(data: DataPost): Promise<DataResponse>{
-        return this.api.post('/order', data)
+    postProducts(data: IOrderRequest): Promise<IOrderResponse> {
+        return this.api.post<IOrderResponse>('/order', data)
     }
 
 }

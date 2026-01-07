@@ -1,7 +1,7 @@
 import { IProduct } from "../../types/index";
 
 export class Cart {
-    products: IProduct[] = [];
+    private products: IProduct[] = [];
     constructor () {} 
     
 
@@ -27,7 +27,7 @@ export class Cart {
     }
 
     //получение стоимости всех товаров в корзине;
-    getTotalPrice() : number | null {
+    getTotalPrice() : number {
         return this.products.reduce(
             (total, product) => total + (product.price || 0), 
             0 )
