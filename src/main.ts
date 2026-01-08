@@ -39,7 +39,7 @@ address:'Linda Tannerin kuja 2F',
 email: 'soosleek@gmail.com',
 phone: '+358452693280'});
 
-console.log('Адрес покупателя', buyerModel.getData().address);
+console.log('Данные покупателя', buyerModel.getData());
 
 
 const buyerModelValidCheck = new Buyer();
@@ -47,7 +47,7 @@ buyerModelValidCheck.setData({payment:'cash',
 address:'Linda Tannerin kuja 2F',
 email: 'soosleek@gmail.com',
 phone: ''});
-console.log('Проверка валидности: ', buyerModelValidCheck.isValid().phone);
+console.log('Проверка валидности: ', buyerModelValidCheck.validate());
 
 buyerModel.clearData()
 console.log('Данные после очистки',buyerModel.getData());

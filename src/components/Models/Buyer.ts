@@ -50,7 +50,7 @@ export class Buyer {
 
     //валидация данных. 
 
-    isValid() : TOrderFormError {
+    validate() : TOrderFormError {
         const errors: TOrderFormError = {}
         if(!this.payment) {
             errors.payment = "Не выбран тип оплаты"
