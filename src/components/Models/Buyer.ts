@@ -1,4 +1,5 @@
 import { IBuyer, TPayment , TOrderFormError} from "../../types/index";
+import { IEvents } from "../base/Events";
 
 
 export class Buyer {
@@ -7,7 +8,7 @@ export class Buyer {
     private email: string;
     private phone: string;
 
-    constructor() {
+    constructor(protected events: IEvents) {
         this.payment = null;
         this.address = "";
         this.email = "";
@@ -28,6 +29,8 @@ export class Buyer {
         if(data.phone !== undefined) {
             this.phone = data.phone
         }  
+
+        this.events.emit('buyer:changed')
     }
 
     //получение всех данных покупателя;
@@ -46,6 +49,8 @@ export class Buyer {
         this.address = "";
         this.email = "";
         this.phone = "";
+
+        this.events.emit('buyer:changed')
     }
 
     //валидация данных. 
@@ -67,6 +72,29 @@ export class Buyer {
         return errors
     }
 
+    validateOrder(): TOrderFormError {
+        const errors: TOrderFormError = {}
+        
+        if(!this.payment) {
+            errors.payment = "Выберите способ оплаты"
+        }
+        if(!this.address?.trim()) {
+            errors.address = "Укажите адрес"
+        }
+        return errors
+    }
 
+
+    validateContacts(): TOrderFormError {
+        const errors: TOrderFormError = {}
+        
+        if(!this.email?.trim()) {
+            errors.email = "Укажите email"
+        }
+        if(!this.phone?.trim()) {
+            errors.phone = "Укажите телефон"
+        }
+        return errors
+    }
 
 }

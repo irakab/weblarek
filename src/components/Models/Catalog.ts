@@ -1,4 +1,5 @@
 import { IProduct } from "../../types/index";
+import { IEvents } from "../base/Events";
 
 
 export class Catalog { 
@@ -6,10 +7,13 @@ export class Catalog {
     private products : IProduct[] = [];
     private selectedProduct : IProduct | null = null;
     
-    constructor () {}
+    constructor (protected events: IEvents) {}
 
     setProducts (products : IProduct[]) : void {  //сохранить массив из продуктов
         this.products = products;
+        this.events.emit('catalog:changed', {
+            products: this.products
+        })
     }
 
     getProducts () : IProduct[] {  //получить массив продуктов
@@ -17,6 +21,7 @@ export class Catalog {
     }
     setSelected(product : IProduct) : void { //сохранение выбранного
         this.selectedProduct = product;
+    
     }
     getSelected() : IProduct | null { //получение выбранного
             return this.selectedProduct

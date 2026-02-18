@@ -1,8 +1,9 @@
 import { IProduct } from "../../types/index";
+import { IEvents } from "../base/Events";
 
 export class Cart {
     private products: IProduct[] = [];
-    constructor () {} 
+    constructor (protected events: IEvents) {} 
     
 
     //получение массива товаров, которые находятся в корзине;
@@ -13,17 +14,20 @@ export class Cart {
     //добавление товара, который был получен в параметре, в массив корзины;
     addProduct(product: IProduct): void {
         this.products.push(product)
+        this.events.emit('cart:changed')
     }
 
     //удаление товара, полученного в параметре из массива корзины;
     removeProduct(product: IProduct): void {
         this.products = this.products.filter(
             (item) => item.id !== product.id )
+        this.events.emit('cart:changed')
     }
 
     //очистка корзины;
     clearCart(): void {
         this.products = []
+        this.events.emit('cart:changed')
     }
 
     //получение стоимости всех товаров в корзине;

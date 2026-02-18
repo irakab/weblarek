@@ -199,3 +199,302 @@ getProducts(): Promise<ObjectApi> делает get запрос на эндпо�
 postProducts(data: DataPost): Promise<DataResponse>делает post запрос на эндпоинт /order/ и передаёт в него данные, полученные в параметрах метода.
 
 
+
+
+### Слой представления (View)
+Кажды класс View наследует Component<T> и использует утилиту ensureElement для безопасного доступа к элементам DOM
+
+#### Класс Header
+Отвечает за отображение шапки с корзиной и кнопкой корзины
+
+Интерфейс:
+    interface IHeader {
+        counter: number
+        }
+
+Коструктор класса:
+    constructor(container:HTMLElement, events: IEvents) {}
+
+Поля класса:
+  basketButton: HTMLButtonElenent  кнопка корзины;
+  counterElement: HTMLElement      счетчик товаров в корзине.
+
+
+Методы класса: 
+    set counter(value: number) изменяет отображение количества товаров в корзине.
+
+
+
+
+#### Класс Gallery
+Отображает каталог товаров
+
+Интерфейс:
+    interface IGallery {
+        calatog: HTMLElement[];
+    }
+
+Конструктор класса:
+    constructor(container:HTMLElement, events: IEvents) {}
+
+Поля класса:
+    catalogElement: HTMLElement   контейнер для карточек товаров в каталоге
+
+Методы класса: 
+    set catalog(items: HTMLElement[])  задает список из карточек товаров для отображения в каталоге
+
+
+
+#### Класс Modal
+Отвечает за отображение и закрытие модального окна
+
+Интерфейс:
+
+    interface IModal {
+            content: HTMLElement;
+        }
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents){}
+
+Поля класса:
+    modalContent: HTMLElement  контейнер для содержимого в моальном окне 
+    modalButton:  HTMLButtonElement   кнопка закрытия модального окна
+    
+Методы класса: 
+    set content(element: HTMLElement) сеттер, который устанавливает элемент сожержимого внутрь контейнераю
+    open() открытие модального окна
+    close() закрытие модального окна
+
+
+#### Класс Sucsess 
+Отвечает за отображение информации об успешном заказе.
+
+Интерфейс:
+
+    interface ISuccess { 
+        total: number; }
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents){}
+
+Поля класса:
+    successDescription: HTMLElement отображение количества списанных синапсов
+    successButton: HTMLButtonElement кнопка успешного заказа
+    
+
+Методы класса: 
+
+    set total(value: number) устанавливает сумму синапсов для отображения
+
+#### Класс Card
+Родительский класс для классов CardCatalog CardView CardCart. Отображает информацию о товаре.
+
+
+Конструктор класса:
+    constructor(container: HTMLElement){}
+
+Поля класса:
+    titleElement: HTMLElement  элемент для названия товара
+    priceElement: HTMLElerment  элемент для цены товара
+
+Методы класса: 
+    set title(value: string) устанавливает наименование в карточку 
+    set price(value: number) устанавливает цену в карточку, при null выводится - Бесценно
+  
+
+
+
+
+#### Класс CardCatalog
+Наследник класса Card. Отображение карточки в каталоге. 
+Событие при нажатии на карточку.
+Обработка клика через callback для открытия preview
+
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents) {}
+
+Поля класса:
+    imageElement: HTMLImageElement   изображение для товара
+    categoryElement: HTMLElement     категория товара
+    А также наследуются поля от родительского класс Card
+
+Методы класса: 
+    set image(url: string) сеттер устанавливает изображение
+    set category(value: string) сеттер устанавливает категорию с добавлением класс categoryMap
+
+
+
+
+#### Класс CardPreview
+Наследний класса Card. Отображает информацию о товаре в модальном окне preview. 
+
+
+Интерфейс:
+interface ICardPriview extends ICard {
+    category: string;
+    image: string;
+    description: string;
+    buttonText: string;
+}
+
+Конструктор класса:
+constructor(container: HTMLElement, onBasketClick?: ()=> void) {} 
+
+Поля класса:
+    imageElement: HTMLImageElement   изображение для товара
+    categoryElement: HTMLElement     категория товара
+    buttonElement: HTMLButtonElement кнопка для добавления товара в корзину
+    descriptionElement: HTMLElement описание товара
+  
+
+
+Методы класса: 
+    set image(value: string) сеттер для изображения
+    set category(value: string) сеттер категории
+    set description(value: string) сеттер для описания
+    set buttonDescription(value:string) сеттер для описания кнопки
+    set disabled(value: boolean) блокировка кнопки
+
+
+#### Класс CardBasket
+Наследник класса Card. Отвечает за отображение карточки в корзине.
+
+Интерфейс:
+ interface ICardBasket extends ICard {
+    index: number;
+ }
+
+Конструктор класса:
+    constructor(container: HTMLElement, onDeleteClick?: ()=> void) {}
+
+Поля класса:
+    buttonDeleteElement: HTMLButtonElement кнопка удаления товара
+    indexElemet: HTMLElement порядковый номер товара
+Методы класса: 
+    set index(value: number) обновляет номер товара.
+
+
+
+
+#### Класс Basket
+Отвечает за отображение товаров в корзине и управление кнопкой оформления заказа.
+
+Интерфейс:
+    interface IBasket{
+        basketList: HTMLElement[];
+        total: number
+    }
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents) {}
+    
+Поля класса:
+    basketListElement: HTMLElement элемент для отображения списка товаров, находящихся в корзине
+    basketButtonElement: HTMLButtonElement для отображения кнопки оформления заказа.
+    totalPriceElement: HTMLElement для отображения  итоговой цены в корзине
+
+Методы класса: 
+    set basketList(items: HTMLElement[]) сеттер для списка товаров, обновление списка
+    set total(value: number) сеттер общей стоимости покупки
+    set isButtonDisables(value: boolean) вкл и выкл активности кнопки
+
+
+
+
+
+#### Класс Form
+Родительский класс для всех форм
+
+Интерфейс: 
+     interface IForm {
+     errors: string;
+    }
+
+Конструктор класса:
+    constructor(container: HTMLElement) {
+    }
+
+Поля класса:
+    formButtonElement: HTMLButtonElement; элемент для кнопки отправки формы
+    formErrorElement: HTMLElement; элемент для текста ошибки формы
+
+Методы класса: 
+    set errors(value: string); сеттер для текста ошибок формы
+
+
+#### Класс OrderForm
+Отвечает за отображение формы заказа. Наследует функционал класса Form
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents) {}
+
+
+Поля класса:
+    cardButtonElement: HTMLButtonElement  элемент кнопки оплаты картой
+    cashButtonElement: HTMLButtonElement  элемент кнопки оплаты наличными
+    inputElement: HTMLInputElement элемент поля для адреса доставки
+
+
+Методы класса: 
+
+    set paymentType(value: TPayment) переключение способа оплаты
+    set address(value: string) сеттер для адреса
+    togglePayment(payment: TPayment) внутренний метод для смены способа оплаты
+
+
+
+#### ContactForm
+Наследник класса Form. Отвечает за отображение формы контактных данных пользователя
+
+Конструктор класса:
+    constructor(container: HTMLElement, events: IEvents) {}
+
+
+Поля класса:
+
+    emailInputElement: HTMLInputElement;  элемент для ввода email адреса
+    phoneInputElement: HTMLInputElement; элемент для ввода  телефонного номера
+
+
+Методы класса: 
+
+    set email(value: string ) сеттер для email
+    set phone(value: string) сеттер для телефона
+    set isButtonDisabled(value:boolean) кнопка формы 
+
+
+#### События моделей
+    catalog:changed изменение каталога продуктов
+    catalog:preview-changed изменение выбранного продукта
+    cart:changed изменение списка товаров в корзине
+    buyer:changed изменение данных покупателя
+
+
+
+
+
+#### Презентер
+Связывает слои: слой моделей, слой View и API. 
+Используются события EventEmitter
+
+
+
+
+#####  События моделей
+- загрузка товаров с сервера (weblarekAPI.getProducts()) в Catalog
+- catalog:changed -рендер (Gallery)
+- catalog:preview-changed открытие модального окна
+- cart:changed обновление корзины
+- buyer:chamged  обновление информации о покупателе в формах
+
+##### События представлений
+basket:open открытие корзины товаров
+modal:close  закрытие модального окна
+orderForm:open открытие формы заказа
+orderForm:submit отправка формы заказа
+orderForm:field-changed изменение содержимого формы заказа
+contactForm:submit отправка формы контактов
+contactForm:field-changed изменение содержимого формы контактов
+success:close успешное завершение заказа
