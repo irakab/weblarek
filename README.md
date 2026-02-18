@@ -490,11 +490,11 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 - buyer:chamged  обновление информации о покупателе в формах
 
 ##### События представлений
-basket:open открытие корзины товаров
-modal:close  закрытие модального окна
-orderForm:open открытие формы заказа
-orderForm:submit отправка формы заказа
-orderForm:field-changed изменение содержимого формы заказа
-contactForm:submit отправка формы контактов
-contactForm:field-changed изменение содержимого формы контактов
-success:close успешное завершение заказа
+- basket:open открытие корзины товаров
+- modal:close  закрытие модального окна
+- orderForm:open открытие формы заказа
+- orderForm:submit отправка формы заказа
+- orderForm:field-changed изменение содержимого формы заказа
+- contactForm:submit отправка формы контактов
+- contactForm:field-changed изменение содержимого формы контактов
+- success:close успешное завершение заказа
