@@ -1,10 +1,13 @@
-import { ICardCatalog } from "../../types/index";
+
 import { categoryMap, CDN_URL } from "../../utils/constants";
 import { ensureElement } from "../../utils/utils";
-import { Card } from "./Card";
+import { Card, ICard } from "./Card";
 
 
-
+interface ICardCatalog extends ICard {
+    image: string;
+    category: string;
+}
 
 
 export class CardCatalog extends Card<ICardCatalog> {

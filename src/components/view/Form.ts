@@ -1,7 +1,10 @@
-import { IForm } from "../../types/index";
+
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 
+export interface IForm {
+    errors: string;
+}
 
 export class Form<T extends IForm> extends Component<T> {
     protected formButtonElement: HTMLButtonElement;

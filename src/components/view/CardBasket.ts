@@ -1,6 +1,10 @@
-import { ICardBasket } from "../../types/index";
+
 import { ensureElement } from "../../utils/utils";
-import { Card } from "./Card";
+import { Card, ICard } from "./Card";
+
+interface ICardBasket extends ICard {
+    index: number;
+}
 
 export class CardBasket extends Card<ICardBasket> {
     protected indexElement: HTMLElement;

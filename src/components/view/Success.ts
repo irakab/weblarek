@@ -1,9 +1,11 @@
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/Events";
-import { ISuccess } from "../../types/index";
 
 
+interface ISuccess {
+    total: number;
+};
 
 export class Success extends Component<ISuccess> {
     protected successDescription: HTMLElement;

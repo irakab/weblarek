@@ -45,57 +45,26 @@ export type TOrderFormError = {
     phone?:string
 }
 
-export interface IGallery { catalog: HTMLElement[]};
-
-export interface IHeader {counter: number};
-
-export interface IModal {
-    content: HTMLElement;
-};
-
-export interface ISuccess {
-    total: number;
-};
-
-export interface ICard {
-    id: string;
-    title: string;
-    price: number | null;
-}
-
-export interface ICardCatalog extends ICard {
-    image: string;
-    category: string;
-}
 
 
-export interface ICardPreview extends ICard {
-    category: string;
-    image: string;
-    description: string;
-    buttonText: string;
-}
-
-export interface ICardBasket extends ICard {
-    index: number;
-}
-
-export interface IBasket{
-    basketList: HTMLElement[];
-    total: number
-}
-
-export interface IForm {
-    errors: string;
-}
-
-export interface IOrderForm extends IForm {
-    payment: TPayment;
-    address: string;
-}
 
 
-export interface IContactForm extends IForm {
-    email: string;
-    phone: string
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,9 @@
 import { Component } from "../base/Component";
-
 import { ensureElement } from "../../utils/utils";
-import { IGallery } from "../../types/index"; 
 
 
 
+interface IGallery { catalog: HTMLElement[]};
 
 export class Gallery extends Component<IGallery> {
     protected catalogElement: HTMLElement;

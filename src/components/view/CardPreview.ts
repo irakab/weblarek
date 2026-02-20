@@ -1,8 +1,14 @@
-import { ICardPreview } from "../../types/index";
+
 import { categoryMap, CDN_URL } from "../../utils/constants";
 import { ensureElement } from "../../utils/utils";
-import { Card } from "./Card";
+import { Card, ICard } from "./Card";
 
+interface ICardPreview extends ICard {
+    category: string;
+    image: string;
+    description: string;
+    buttonText: string;
+}
 export type CategoryKey = keyof typeof categoryMap;
 
 

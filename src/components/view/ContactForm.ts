@@ -1,8 +1,12 @@
-import { IContactForm } from "../../types/index";
+
 import { ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/Events";
-import { Form } from "./Form";
+import { Form, IForm } from "./Form";
 
+interface IContactForm extends IForm {
+    email: string;
+    phone: string
+}
 
 export class ContactForm extends Form<IContactForm> {
     protected emailInputElement: HTMLInputElement;

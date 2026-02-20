@@ -1,10 +1,14 @@
 
 
-import { IOrderForm, TPayment } from "../../types/index";
+import { TPayment } from "../../types/index";
 import { ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/Events";
-import { Form } from "./Form";
+import { Form, IForm } from "./Form";
 
+interface IOrderForm extends IForm {
+    payment: TPayment;
+    address: string;
+}
 
 export class OrderForm extends Form<IOrderForm>  {
     protected cardButtonElement: HTMLButtonElement;
