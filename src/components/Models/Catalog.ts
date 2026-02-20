@@ -11,9 +11,7 @@ export class Catalog {
 
     setProducts (products : IProduct[]) : void {  //сохранить массив из продуктов
         this.products = products;
-        this.events.emit('catalog:changed', {
-            products: this.products
-        })
+        this.events.emit('catalog:changed')
     }
 
     getProducts () : IProduct[] {  //получить массив продуктов
@@ -21,6 +19,7 @@ export class Catalog {
     }
     setSelected(product : IProduct) : void { //сохранение выбранного
         this.selectedProduct = product;
+        this.events.emit('product:selected')
     
     }
     getSelected() : IProduct | null { //получение выбранного

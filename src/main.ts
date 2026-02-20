@@ -177,22 +177,24 @@ events.on('cart:changed', ()=> {
 //Изменение данных покупателя
 events.on('buyer:changed', () => {
     const data = buyer.getData();
-    console.log('данные покупатеоля', buyer.getData())
-   
-    const orderErrors = buyer.validateOrder();
-    const contactErrors = buyer.validateContacts();
+    const errors = buyer.validate()
 
+ 
+  
     orderForm.render({
-        payment: data.payment,
-        address: data.address,
-        errors: Object.values(orderErrors).join(' ')
-    });
-
+            payment: data.payment,
+            address: data.address || '',
+            errors: ''
+        });
+    orderForm.isButtonDisabled = !!(errors.payment || errors.address)
+    
     contactForm.render({
-        email: data.email,
-        phone: data.phone,
-        errors: Object.values(contactErrors).join(' ')
+        email: data.email || '',
+        phone: data.phone || '',
+        errors: ''
     });
+    contactForm.isButtonDisabled = !!(errors.email || errors.phone)
+   
 });
 
 
@@ -224,18 +226,12 @@ events.on('orderForm:open', () => {
         //форма заказа
 events.on <{ field: string, value: string }>('orderForm:field-changed', ({ field, value }) => {
     buyer.setData({ [field]: value });
-          
-    const errors = buyer.validateOrder();
-    orderForm.errors = Object.values(errors).join(' | ');
-    orderForm.payment = buyer.getData().payment;
-    orderForm.address = buyer.getData().address || '';
           });
 
 events.on('orderForm:submit', () => {
-    const errors = buyer.validateOrder();
+    const errors = buyer.validate();
   
-    if (Object.keys(errors).length > 0) {
-      orderForm.errors = Object.values(errors).join(' | ');
+    if (errors.payment || errors.address) {
       return;
     }
   
@@ -246,24 +242,27 @@ events.on('orderForm:submit', () => {
     //контактная форма
 events.on <{ field: string, value: string }>('contactForm:field-changed', ({ field, value })  => {
     buyer.setData({ [field]: value});
-    const errors= buyer.validateContacts();
-    contactForm.errors = Object.values(errors).join(' | ');
-    contactForm.email =buyer.getData().email;
-    contactForm.phone = buyer.getData().phone;
+
 });
 
 events.on('contactForm:submit', () => {
+    const errors = buyer.validate();
+    if(errors.email || errors.phone) {
+        return
+    }
     const  orderData = { ...buyer.getData(), 
                         items: cart.getProducts().map(product => product.id),
                         total: cart.getTotalPrice()
                     }
-    weblarekAPI.getProducts()
+    weblarekAPI.postProducts(orderData)
         .then(()=> {
             cart.clearCart();
             buyer.clearData();
             modal.render( {content: successView.render({ total: orderData.total ?? 0 })
+            })
         })
-
+        .catch((error) => {
+            console.log('Ошибка заказа:', error);
         })
     })
     

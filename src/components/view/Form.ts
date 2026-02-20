@@ -19,7 +19,11 @@ export class Form<T extends IForm> extends Component<T> {
     set errors(value: string) {
     
         this.formErrorElement.textContent = value;
-    
-        this.formButtonElement.disabled = value.trim() !== '';
+  
         }
+
+    set isButtonDisabled(value: boolean) {
+            this.formButtonElement.disabled = value;
+        }
+        
     }

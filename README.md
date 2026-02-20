@@ -422,6 +422,7 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 
 Методы класса: 
     set errors(value: string); сеттер для текста ошибок формы
+    set isButtonDisabled(value:boolean) кнопка формы 
 
 
 #### Класс OrderForm
@@ -462,7 +463,7 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 
     set email(value: string ) сеттер для email
     set phone(value: string) сеттер для телефона
-    set isButtonDisabled(value:boolean) кнопка формы 
+
 
 
 #### События моделей
@@ -487,6 +488,7 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 - catalog:changed -рендер (Gallery)
 - catalog:preview-changed открытие модального окна
 - cart:changed обновление корзины
+- product:selected продукт выбран
 - buyer:chamged  обновление информации о покупателе в формах
 
 ##### События представлений

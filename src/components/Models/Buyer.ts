@@ -72,29 +72,4 @@ export class Buyer {
         return errors
     }
 
-    validateOrder(): TOrderFormError {
-        const errors: TOrderFormError = {}
-        
-        if(!this.payment) {
-            errors.payment = "Выберите способ оплаты"
-        }
-        if(!this.address?.trim()) {
-            errors.address = "Укажите адрес"
-        }
-        return errors
-    }
-
-
-    validateContacts(): TOrderFormError {
-        const errors: TOrderFormError = {}
-        
-        if(!this.email?.trim()) {
-            errors.email = "Укажите email"
-        }
-        if(!this.phone?.trim()) {
-            errors.phone = "Укажите телефон"
-        }
-        return errors
-    }
-
 }

@@ -39,10 +39,8 @@ export class ContactForm extends Form<IContactForm> {
         })
     }
 
-    set isButtonDisabled(value: boolean) {
-        this.formButtonElement.disabled = value;
-    }
     
+
     set email (value: string) {
         this.emailInputElement.value = value
     }
