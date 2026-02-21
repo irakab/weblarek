@@ -10,7 +10,7 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 
 import { EventEmitter } from './components/base/Events';
 import { Header } from './components/view/Header';
-import { Gallery } from "./components/View/Gallery";
+import { Gallery } from "./components/view/Gallery";
 
 import { Modal } from './components/view/Modal';
 
@@ -42,9 +42,11 @@ const buyer = new Buyer(events)
         //шапка
 const headerContainer = ensureElement<HTMLElement>('.header')
 const header = new Header(headerContainer, events)
+
         //галлерея
 const galleryContainer = ensureElement<HTMLElement>('.gallery')
 const gallery = new Gallery(galleryContainer)
+
         //модальное окно 
 const modalContainer = ensureElement<HTMLElement>('.modal')
 const modal = new Modal(modalContainer, events);
@@ -68,7 +70,6 @@ const successView = new Success(cloneTemplate('#success'), events);
 weblarekAPI.getProducts()
     .then((result) => {
         catalog.setProducts(result.items);
-        //console.log(catalog)
     })
     .catch((error) =>{
         console.error('Ошибка загрузки товаров', error)
@@ -81,25 +82,10 @@ weblarekAPI.getProducts()
 
 events.on('catalog:changed', () => {
     const products = catalog.getProducts()
-    /*console.log('каталог рендер')
-    console.log('продукты из каталога', products)
-    //проверка каждого продукта
-    products.forEach((product, index) => {
-        console.log(`Продукт ${index}:`, {
-            id: product.id,
-            title: product.title,
-            type_id: typeof product.id,
-            is_id: !!product.id
-        });
-    }); */
 
     const cards = products.map(product => {
-        console.log('карточка для ', product.id, product.title)
         const card = new CardCatalog(
             cloneTemplate('#card-catalog'), ()=> {
-                console.log('клик по карточке')
-                console.log('кликнутый продукт', product)
-                console.log('id кликнутого ', product.id) 
             events.emit('catalog:preview-changed', { id: product.id })
             });
         return card.render(product);   
@@ -112,18 +98,13 @@ events.on('catalog:changed', () => {
 //Открыть preview выбранного товара
 
 events.on('catalog:preview-changed', ({id}: {id:string}) => {
-    console.log('событие превью ', id )
     const product = catalog.getProductById(id)
-    console.log('товар ', product)
     if(!product) {
-        console.log('продукт не найден')
         return
     }
     catalog.setSelected(product);
     const inCart = cart.hasProduct(product.id)
-    console.log('в корзине', inCart)
     const preview = new CardPreview(cloneTemplate('#card-preview'), ()=> {
-        console.log('кнопка нажата')
         if(cart.hasProduct(product.id)){
             cart.removeProduct(product)
         }else {
@@ -139,9 +120,7 @@ events.on('catalog:preview-changed', ({id}: {id:string}) => {
             ? 'Удалить из корзины'
             : 'В корзину'
     }
-    console.log('превью данные', previewData)
     const renderedPreview = preview.render(previewData);
-    console.log('превью элемент')
     modal.render({
         content: renderedPreview
     })
@@ -270,4 +249,3 @@ events.on('contactForm:submit', () => {
     //закрытие модального
 
 events.on('success:close', () => modal.close());
-

@@ -1,4 +1,3 @@
-
 import { categoryMap, CDN_URL } from "../../utils/constants";
 import { ensureElement } from "../../utils/utils";
 import { Card, ICard } from "./Card";
@@ -55,5 +54,3 @@ export class CardPreview extends Card<ICardPreview> {
         this.buttonElement.disabled = value;
     }
 }
-
-

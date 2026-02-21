@@ -47,8 +47,3 @@ export class Cart {
         return this.products.some((product) => product.id === id)
     }
 }
-
-
-
-
-
