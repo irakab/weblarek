@@ -28,9 +28,7 @@ export class CardPreview extends Card<ICardPreview> {
             this.buttonElement.addEventListener("click", onBasketClick)
         }
     } 
-    set id(value: string) {
-        this.container.dataset.id = value;
-    }
+
 
     set image(value:string) {
         this.imageElement.src = `${CDN_URL}/${value}`

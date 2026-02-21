@@ -1,5 +1,5 @@
 import { Component } from "../base/Component";
-import { ensureElement } from "../../utils/utils";
+
 
 
 
@@ -10,7 +10,7 @@ export class Gallery extends Component<IGallery> {
 
     constructor(container:HTMLElement){
         super(container);
-        this.catalogElement = ensureElement<HTMLElement>('.gallery', this.container)
+        this.catalogElement = this.container
     }
     set catalog(items: HTMLElement[]) {
         this.catalogElement.replaceChildren(...items);

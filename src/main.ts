@@ -43,7 +43,7 @@ const buyer = new Buyer(events)
 const headerContainer = ensureElement<HTMLElement>('.header')
 const header = new Header(headerContainer, events)
         //галлерея
-const galleryContainer = ensureElement<HTMLElement>('.page')
+const galleryContainer = ensureElement<HTMLElement>('.gallery')
 const gallery = new Gallery(galleryContainer)
         //модальное окно 
 const modalContainer = ensureElement<HTMLElement>('.modal')
@@ -61,6 +61,7 @@ const contactForm = new ContactForm(cloneTemplate('#contacts'), events);
 contactForm.isButtonDisabled = true;
         //отображение окна успешного заказа 
 const successView = new Success(cloneTemplate('#success'), events);
+      
 
 
 //Загрузка с сервера
