@@ -114,6 +114,11 @@ events.on('product:selected', () => {
     buttonText: buttonText };
 
     const renderedPreview = preview.render(previewData);
+    if(product.price === null) {
+        preview.disabled = true;
+    }else {
+        preview.disabled = false;
+    }
     modal.render({ content: renderedPreview });
     modal.open()
 
@@ -130,7 +135,7 @@ events.on('preview:button-click', () => {
     modal.close();
 })
 
-//Изменения в корзине
+
 
 events.on('cart:changed', ()=> {
     header.counter = cart.getProductsCount()
@@ -146,7 +151,7 @@ events.on('cart:changed', ()=> {
     basketView.render({
         basketList: items,
         total: cart.getTotalPrice(),
-        isButtonDisabled: cart.getTotalPrice() === 0
+        isButtonDisabled: !cart.getTotalPrice()
     })
 })
 

@@ -28,7 +28,6 @@ export class CardPreview extends Card<ICardPreview> {
         }
     } 
 
-
     set image(value:string) {
         this.imageElement.src = `${CDN_URL}/${value}`
     }
