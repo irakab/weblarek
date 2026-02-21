@@ -19,7 +19,7 @@ export class Success extends Component<ISuccess> {
 
 
         this.successButton.addEventListener('click', () => {
-            this.events.emit('success:close')
+            this.events.emit('modal:close')
         })
     }
     set total(value: number) {

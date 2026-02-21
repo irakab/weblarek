@@ -64,7 +64,9 @@ contactForm.isButtonDisabled = true;
         //отображение окна успешного заказа 
 const successView = new Success(cloneTemplate('#success'), events);
       
-
+const preview = new CardPreview(cloneTemplate('#card-preview'), () => {
+    events.emit('preview:button-click');
+})
 
 //Загрузка с сервера
 weblarekAPI.getProducts()
@@ -95,35 +97,37 @@ events.on('catalog:changed', () => {
 })
 
 
-//Открыть preview выбранного товара
-
-events.on('catalog:preview-changed', ({id}: {id:string}) => {
+events.on('catalog:preview-changed', ({id}: {id:string}) =>{
     const product = catalog.getProductById(id)
-    if(!product) {
-        return
-    }
-    catalog.setSelected(product);
+    if(product) {
+        catalog.setSelected(product)
+    };
+
+})
+events.on('product:selected', () => {
+    const product = catalog.getSelected()
+    if(!product) return;
     const inCart = cart.hasProduct(product.id)
-    const preview = new CardPreview(cloneTemplate('#card-preview'), ()=> {
-        if(cart.hasProduct(product.id)){
-            cart.removeProduct(product)
-        }else {
-            cart.addProduct(product)
-        };
-        if(product.price == null) return;
-        modal.close()
-    })
+    const  buttonText = product.price === null ? 'Недоступно' : (inCart ? 'Удалить из корзины' : 'Купить');
+    
     const previewData = {...product,
-        buttonText: product.price === null
-        ? 'Недоступно'
-        :inCart
-            ? 'Удалить из корзины'
-            : 'В корзину'
-    }
+    buttonText: buttonText };
+
     const renderedPreview = preview.render(previewData);
-    modal.render({
-        content: renderedPreview
-    })
+    modal.render({ content: renderedPreview });
+    modal.open()
+
+})
+
+events.on('preview:button-click', () => {
+    const product = catalog.getSelected();
+    if(!product || product.price === null) return
+    if(cart.hasProduct(product.id)) {
+        cart.removeProduct(product);
+    }else {
+        cart.addProduct(product)
+    }
+    modal.close();
 })
 
 //Изменения в корзине
@@ -131,15 +135,7 @@ events.on('catalog:preview-changed', ({id}: {id:string}) => {
 events.on('cart:changed', ()=> {
     header.counter = cart.getProductsCount()
     const products = cart.getProducts()
-    if(products.length === 0) {
-        basketView.render({
-            basketList: [],
-            total: 0,
-        });
-        basketView.isButtonDisabled = true;
-        return;
-    } 
-    basketView.isButtonDisabled = false;
+  
     const items = products.map((product, index) => {
         const item = new CardBasket(cloneTemplate('#card-basket'), () => {
             cart.removeProduct(product)
@@ -149,7 +145,8 @@ events.on('cart:changed', ()=> {
    
     basketView.render({
         basketList: items,
-        total: cart.getTotalPrice() ?? 0
+        total: cart.getTotalPrice(),
+        isButtonDisabled: cart.getTotalPrice() === 0
     })
 })
 
@@ -182,13 +179,6 @@ events.on('buyer:changed', () => {
     //открытие корзины
 
 events.on('basket:open', () => {
-    const products = cart.getProducts();
-
-    if (products.length === 0) {
-        basketView.isButtonDisabled = true
-    }else {
-        basketView.isButtonDisabled = false
-    }
     modal.render({ content: basketView.render() })
     modal.open()
 })
@@ -199,7 +189,7 @@ events.on('basket:open', () => {
 
 events.on('orderForm:open', () => {
     modal.render({ content: orderForm.render() })
-    modal.open
+    modal.open()
         })
        
        
@@ -242,10 +232,10 @@ events.on('contactForm:submit', () => {
             })
         })
         .catch((error) => {
-            console.log('Ошибка заказа:', error);
+            console.error('Ошибка заказа:', error);
         })
     })
     
     //закрытие модального
 
-events.on('success:close', () => modal.close());
+events.on('modal:close', () => modal.close());
