@@ -268,6 +268,6 @@ events.on('contactForm:submit', () => {
     })
     
     //закрытие модального
-events.on('modal:close', () => modal.close());
+
 events.on('success:close', () => modal.close());
 

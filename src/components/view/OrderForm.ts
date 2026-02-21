@@ -26,16 +26,13 @@ export class OrderForm extends Form<IOrderForm>  {
             this.events.emit('orderForm:submit')
         });
         this.cardButtonElement.addEventListener('click', () => {
-            console.log('Клик по кнопке Онлайн')
-            this.togglePayment('online')
             this.events.emit('orderForm:field-changed',{
                 field: 'payment',
                 value: 'online'
             })
         })
         this.cashButtonElement.addEventListener('click', () => {
-            console.log('Клик по кнопке При получении');
-            this.togglePayment('cash');
+
             this.events.emit('orderForm:field-changed',{
                 field: 'payment',
                 value: 'cash'
@@ -49,21 +46,20 @@ export class OrderForm extends Form<IOrderForm>  {
             })
         })
     }
+        
+        
+        
 
-    togglePayment(payment: TPayment) {
+    set payment(value: TPayment) {
         this.cardButtonElement.classList.remove('button_alt-active');
         this.cashButtonElement.classList.remove('button_alt-active');
-        
-        if (payment === 'online') {
+        if (value === 'online') {
             this.cardButtonElement.classList.add('button_alt-active');
-        } else if (payment === 'cash') {
+        } else if (value === 'cash') {
             this.cashButtonElement.classList.add('button_alt-active');
         }
     }
-
-    set payment(value: TPayment) {
-        this.togglePayment(value);
-    }
+    
 
 
     set address(value: string) {
