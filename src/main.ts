@@ -180,9 +180,6 @@ events.on('buyer:changed', () => {
 });
 
 
-//View события
-    //открытие корзины
-
 events.on('basket:open', () => {
     modal.render({ content: basketView.render() })
     modal.open()
@@ -190,7 +187,7 @@ events.on('basket:open', () => {
 
 
     //ФОРМЫ
-    //формирование заказа
+
 
 events.on('orderForm:open', () => {
     modal.render({ content: orderForm.render() })
@@ -198,7 +195,7 @@ events.on('orderForm:open', () => {
         })
        
        
-        //форма заказа
+
 events.on <{ field: string, value: string }>('orderForm:field-changed', ({ field, value }) => {
     buyer.setData({ [field]: value });
           });
@@ -214,7 +211,6 @@ events.on('orderForm:submit', () => {
   });
 
 
-    //контактная форма
 events.on <{ field: string, value: string }>('contactForm:field-changed', ({ field, value })  => {
     buyer.setData({ [field]: value});
 
@@ -241,6 +237,6 @@ events.on('contactForm:submit', () => {
         })
     })
     
-    //закрытие модального
+
 
 events.on('modal:close', () => modal.close());

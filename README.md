@@ -187,7 +187,7 @@ hasProduct(id: string): boolean проверка наличия товара в 
 setData(data: Partial<IBuyer>): void сохранение данных в модели;
 getData(): IBuyer получение всех данных покупателя;
 clearData(): void очистка данных покупателя;
-isValid() : Errors валидация данных покупателя.
+validate() : TOrderFormError валидация данных покупателя.
 
 ### Слой коммуникации
 #### Класс WeblarekApi
@@ -195,8 +195,8 @@ isValid() : Errors валидация данных покупателя.
 constructor(private api: IApi) принимает экземпляр класса, реализует интерфейс IApi
 
 Методы класса: 
-getProducts(): Promise<ObjectApi> делает get запрос на эндпоинт /product/ и возвращает массив товаров;
-postProducts(data: DataPost): Promise<DataResponse>делает post запрос на эндпоинт /order/ и передаёт в него данные, полученные в параметрах метода.
+getProducts(): Promise<IProductsResponse> получение списка товаров
+postProducts(data: IOrderRequest): Promise<IOrderResponse>отправка заказа
 
 
 
@@ -246,7 +246,7 @@ postProducts(data: DataPost): Promise<DataResponse>делает post запро�
 
 
 #### Класс Modal
-Отвечает за отображение и закрытие модального окна
+Управляет модальным окном
 
 Интерфейс:
 
@@ -486,12 +486,13 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 #####  События моделей
 - загрузка товаров с сервера (weblarekAPI.getProducts()) в Catalog
 - catalog:changed -рендер (Gallery)
-- catalog:preview-changed открытие модального окна
 - cart:changed обновление корзины
 - product:selected продукт выбран
 - buyer:chamged  обновление информации о покупателе в формах
 
 ##### События представлений
+- catalog:preview-changed  клик по карточке товара
+- preview:button-click клик по кнопке превью
 - basket:open открытие корзины товаров
 - modal:close  закрытие модального окна
 - orderForm:open открытие формы заказа
@@ -499,4 +500,4 @@ constructor(container: HTMLElement, onBasketClick?: ()=> void) {}
 - orderForm:field-changed изменение содержимого формы заказа
 - contactForm:submit отправка формы контактов
 - contactForm:field-changed изменение содержимого формы контактов
-- success:close успешное завершение заказа
+- modal:close  закрытие модального окна
